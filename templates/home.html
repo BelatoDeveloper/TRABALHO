@@ -1,0 +1,222 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}BeatBooks • Prévia & Acesso Antecipado{% endblock %}
+
+{% block content %}
+<section class="hero-section" id="projeto">
+  <div class="hero-content">
+    <h1 class="hero-title">
+      Sua jornada de leitura em um <span class="highlight">novo formato</span>.
+    </h1>
+
+    <p class="hero-description">
+      O BeatBooks está sendo desenvolvido para transformar a maneira como você se conecta com a literatura. Organize sua estante, registre reflexões profundas sobre cada livro lido e construa um histórico vivo de memórias literárias.
+    </p>
+
+    <div class="hero-buttons">
+      {% if user.is_authenticated %}
+        <div class="early-access-badge" style="font-size: 0.95rem; padding: 0.6rem 1.2rem;">
+          ✓ Você já está inscrito para o Acesso Antecipado!
+        </div>
+        <a href="{% url 'perfil' %}" class="btn-beatbooks btn-primary">
+          Acessar Minha Estante
+        </a>
+      {% else %}
+        <a href="{% url 'cadastro' %}" class="btn-beatbooks btn-primary">
+          Inscrever-se para Acesso Antecipado
+        </a>
+        <a href="#previas" class="btn-beatbooks btn-secondary">
+          Ver Prévias do App
+        </a>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="hero-visual-card">
+    <span class="hero-mockup-badge">Conceito do App</span>
+    <h3 style="font-size: 1.3rem; font-weight: 800; margin-bottom: 0.5rem;">📖 Estante Inteligente</h3>
+    <p style="color: var(--text-muted); font-size: 0.9rem;">
+      Interface limpa, cards táteis e um cantinho especial para você guardar o resumo de cada página lida.
+    </p>
+
+    <div class="hero-stats-row">
+      <div class="hero-stat-item">
+        <div class="hero-stat-value">{{ total_inscritos }}</div>
+        <div class="hero-stat-label">Leitores Inscritos</div>
+      </div>
+      <div class="hero-stat-item">
+        <div class="hero-stat-value">{{ total_livros }}</div>
+        <div class="hero-stat-label">Obras Registradas</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="previas" class="previews-section">
+  <div class="section-header">
+    <div class="section-tag">Design &amp; Experiência Mobile</div>
+    <h2 class="section-title">Prévias do Aplicativo - Conheça o Futuro App</h2>
+    <p class="section-subtitle">
+      Veja como cada funcionalidade do BeatBooks funciona na prática, combinando o visual do aplicativo aos detalhes da sua experiência de leitura.
+    </p>
+  </div>
+
+  <div class="previews-grid">
+    <article class="preview-card">
+      <div class="phone-mockup">
+        <div class="phone-notch"></div>
+        <img src="{% static 'images/trilha_light.png' %}" alt="Trilha de leitura claro" class="phone-screen-img">
+      </div>
+      <div class="preview-feature-box">
+        <div class="preview-feature-header">
+          <div class="feature-step-num feature-step-1">1</div>
+          <span class="preview-tag preview-tag-blue">Modo Claro</span>
+        </div>
+        <h3 class="feature-card-title">1. Organize sua Trilha de Leitura</h3>
+        <p class="feature-card-text">
+          Mantenha um catálogo impecável dos livros que já passaram pelos seus olhos. Mostra como o usuário avança em uma trilha visual conectando os livros lidos, ganhando XP com base na dificuldade da obra e mantendo a "ofensiva diária" acesa.
+        </p>
+      </div>
+    </article>
+
+    <article class="preview-card">
+      <div class="phone-mockup">
+        <div class="phone-notch"></div>
+        <img src="{% static 'images/trilha_dark.png' %}" alt="Trilha de leitura escuro" class="phone-screen-img">
+      </div>
+      <div class="preview-feature-box">
+        <div class="preview-feature-header">
+          <div class="feature-step-num feature-step-2">2</div>
+          <span class="preview-tag preview-tag-blue">Modo Escuro</span>
+        </div>
+        <h3 class="feature-card-title">2. Crie o Hábito no seu Ritmo</h3>
+        <p class="feature-card-text">
+          Sem fórmulas artificiais ou pressões desnecessárias. Destaque para o suporte nativo a temas, mostrando a mesma trilha adaptada para leituras noturnas confortáveis e mantendo a constância prazerosa de boas histórias.
+        </p>
+      </div>
+    </article>
+
+    <article class="preview-card">
+      <div class="phone-mockup">
+        <div class="phone-notch"></div>
+        <img src="{% static 'images/comunidade.png' %}" alt="Resumos na comunidade" class="phone-screen-img">
+      </div>
+      <div class="preview-feature-box">
+        <div class="preview-feature-header">
+          <div class="feature-step-num feature-step-3">3</div>
+          <span class="preview-tag preview-tag-green">Social &amp; Memórias</span>
+        </div>
+        <h3 class="feature-card-title">3. Registre Resumos e Memórias</h3>
+        <p class="feature-card-text">
+          Escreva pequenos resumos personalizados que ficam eternizados em formato de folha de livro aberto. Apresente o feed social onde leitores compartilham suas impressões em cards que imitam páginas de livros reais.
+        </p>
+      </div>
+    </article>
+
+    <article class="preview-card">
+      <div class="phone-mockup">
+        <div class="phone-notch"></div>
+        <img src="{% static 'images/perfil_stats.png' %}" alt="Estatísticas do perfil" class="phone-screen-img">
+      </div>
+      <div class="preview-feature-box">
+        <div class="preview-feature-header">
+          <div class="feature-step-num feature-step-4">4</div>
+          <span class="preview-tag preview-tag-purple">Estatísticas</span>
+        </div>
+        <h3 class="feature-card-title">4. Perfil do Leitor e Estatísticas</h3>
+        <p class="feature-card-text">
+          Mostre o painel do leitor com o nível atual, XP acumulado, total de páginas lidas, sequência diária (ofensiva) e a estante virtual organizada com as capas dos livros concluídos.
+        </p>
+      </div>
+    </article>
+
+    <article class="preview-card">
+      <div class="phone-mockup">
+        <div class="phone-notch"></div>
+        <img src="{% static 'images/assistentes.png' %}" alt="Assistentes Literários" class="phone-screen-img">
+      </div>
+      <div class="preview-feature-box">
+        <div class="preview-feature-header">
+          <div class="feature-step-num feature-step-5">5</div>
+          <span class="preview-tag preview-tag-orange">Em Desenvolvimento</span>
+        </div>
+        <h3 class="feature-card-title">5. Escolha seu Assistente Literário</h3>
+        <p class="feature-card-text">
+          O app contará com 4 Assistentes Literários com identidade própria. Cada um deles (atualmente exibidos como opções em slots reservados: Pilha de Livros, Pena de Escrita, Escudo de Conquista e Pena com Tinteiro) acompanhará o leitor em sua jornada, oferecendo interações únicas. Destaque que esta funcionalidade ainda está em desenvolvimento.
+        </p>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section id="vitrine-resumos" style="padding: 1.5rem 0 3rem;">
+  <div class="section-header">
+    <div class="section-tag">Vitrine da Comunidade</div>
+    <h2 class="section-title">Últimas Leituras &amp; Resumos</h2>
+    <p class="section-subtitle">
+      Veja os livros e as impressões registradas pelos primeiros leitores inscritos no BeatBooks.
+    </p>
+  </div>
+
+  {% if not user.is_authenticated %}
+    <div class="alert-beatbooks alert-info" style="margin-bottom: 2rem;">
+      <span>💡 <strong>Quer registrar os seus próprios livros?</strong> Faça sua inscrição no Acesso Antecipado para criar sua estante e publicar seus resumos.</span>
+      <a href="{% url 'cadastro' %}" class="btn-beatbooks btn-primary btn-sm">Criar Conta</a>
+    </div>
+  {% endif %}
+
+  {% if resumos_recentes %}
+    <div class="bookshelf-grid">
+      {% for livro in resumos_recentes %}
+        <article class="card-beatbooks book-card-item">
+          <div class="book-card-header">
+            <div>
+              <h3 class="book-title">{{ livro.titulo }}</h3>
+              <div class="book-author">por {{ livro.autor }}{% if livro.ano_publicacao %} ({{ livro.ano_publicacao }}){% endif %}</div>
+            </div>
+            {% if livro.avaliacao %}
+              <span class="rating-badge">{{ livro.get_avaliacao_display }}</span>
+            {% endif %}
+          </div>
+
+          <div class="reading-status-bar">
+            <span class="reading-status-indicator">Leitura Concluída</span>
+            <span>100%</span>
+          </div>
+
+          <div class="book-sheet">
+            <p class="book-sheet-text">{{ livro.resumo }}</p>
+            <div class="book-sheet-footer">
+              — {% if livro.total_paginas %}{{ livro.total_paginas }} págs • {% endif %}Resumo de {{ livro.perfil.nome_exibicao }} ({{ livro.perfil.arroba }}) —
+            </div>
+          </div>
+        </article>
+      {% endfor %}
+    </div>
+
+    <div style="text-align: center; margin-top: 2.5rem;">
+      <a href="{% url 'resumos_comunidade' %}" class="btn-beatbooks btn-secondary">
+        Ver Todos os Resumos da Comunidade
+      </a>
+    </div>
+  {% else %}
+    <div class="empty-state-box">
+      <div class="empty-state-icon">📚</div>
+      <h3 class="empty-state-title">Nenhum livro registrado ainda</h3>
+      <p class="empty-state-text">
+        Seja o primeiro a se inscrever no Acesso Antecipado e adicione suas leituras recentes para inaugurar a vitrine!
+      </p>
+      {% if not user.is_authenticated %}
+        <a href="{% url 'cadastro' %}" class="btn-beatbooks btn-primary">
+          Inscreva-se Agora
+        </a>
+      {% else %}
+        <a href="{% url 'adicionar_livro' %}" class="btn-beatbooks btn-success">
+          + Adicionar Primeiro Livro
+        </a>
+      {% endif %}
+    </div>
+  {% endif %}
+</section>
+{% endblock %}

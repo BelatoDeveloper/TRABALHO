@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}Excluir Livro • BeatBooks{% endblock %}
+
+{% block content %}
+<div class="form-center-container" style="max-width: 500px;">
+  <div class="card-beatbooks" style="border-color: var(--danger-red);">
+    <div class="form-header">
+      <div class="brand-icon"
+        style="margin: 0 auto 1.25rem; background: var(--danger-red); border-bottom-color: var(--danger-red-shadow);">
+        🗑️
+      </div>
+      <h2 style="font-size: 1.6rem; font-weight: 900; margin-bottom: 0.5rem; color: var(--danger-red);">
+        Remover Livro da Estante?
+      </h2>
+      <p style="color: var(--text-muted); font-size: 0.95rem;">
+        Você está prestes a remover o livro <strong>"{{ livro.titulo }}"</strong> e seu resumo literário. Esta ação não
+        poderá ser desfeita.
+      </p>
+    </div>
+
+    <div class="book-sheet" style="margin-bottom: 1.75rem;">
+      <strong style="color: #8B261D; display: block; margin-bottom: 0.25rem;">{{ livro.titulo }}</strong>
+      <p style="font-size: 0.88rem; color: #2D2A24; line-height: 1.4;">
+        {{ livro.resumo|truncatewords:20 }}
+      </p>
+    </div>
+
+    <form method="POST">
+      {% csrf_token %}
+      <div style="display: flex; gap: 0.8rem;">
+        <a href="{% url 'perfil' %}" class="btn-beatbooks btn-secondary" style="flex: 1;">
+          Cancelar
+        </a>
+        <button type="submit" class="btn-beatbooks btn-danger" style="flex: 1;">
+          Sim, Excluir Obra
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block title %}Comunidade & Resumos • BeatBooks{% endblock %}
+
+{% block content %}
+<section style="padding: 1rem 0 3rem;">
+  <div class="section-header">
+    <div class="section-tag">
+      Leituras Compartilhadas
+    </div>
+    <h1 class="section-title">Comunidade BeatBooks</h1>
+    <p class="section-subtitle">
+      Explore reflexões, memórias e pequenos resumos deixados pelos leitores inscritos no Acesso Antecipado.
+    </p>
+  </div>
+
+  {% if not user.is_authenticated %}
+    <div class="alert-beatbooks alert-info" style="margin-bottom: 2rem;">
+      <span>📖 <strong>Gostou dos resumos?</strong> Crie sua conta para registrar suas próprias impressões e garantir sua vaga no Acesso Antecipado.</span>
+      <a href="{% url 'cadastro' %}" class="btn-beatbooks btn-primary btn-sm">Inscrever-se</a>
+    </div>
+  {% else %}
+    <div style="text-align: right; margin-bottom: 1.5rem;">
+      <a href="{% url 'adicionar_livro' %}" class="btn-beatbooks btn-success btn-sm">
+        + Adicionar Meu Resumo
+      </a>
+    </div>
+  {% endif %}
+
+  {% if resumos %}
+    <div class="bookshelf-grid">
+      {% for livro in resumos %}
+        <article class="card-beatbooks book-card-item">
+          <div class="book-card-header">
+            <div>
+              <h3 class="book-title">{{ livro.titulo }}</h3>
+              <div class="book-author">por {{ livro.autor }}{% if livro.ano_publicacao %} ({{ livro.ano_publicacao }}){% endif %}</div>
+            </div>
+            {% if livro.avaliacao %}
+              <span class="rating-badge">{{ livro.get_avaliacao_display }}</span>
+            {% endif %}
+          </div>
+
+          <div class="reading-status-bar">
+            <span class="reading-status-indicator">Leitura Concluída</span>
+            <span>100%</span>
+          </div>
+
+          <div class="book-sheet">
+            <p class="book-sheet-text">{{ livro.resumo }}</p>
+            <div class="book-sheet-footer">
+              — {% if livro.total_paginas %}{{ livro.total_paginas }} págs • {% endif %}Resumo de {{ livro.perfil.nome_exibicao }} ({{ livro.perfil.arroba }}) —
+            </div>
+          </div>
+        </article>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="empty-state-box">
+      <div class="empty-state-icon">📚</div>
+      <h3 class="empty-state-title">Ainda não há resumos na comunidade</h3>
+      <p class="empty-state-text">
+        Seja o primeiro leitor a compartilhar suas memórias sobre um livro lido!
+      </p>
+      {% if user.is_authenticated %}
+        <a href="{% url 'adicionar_livro' %}" class="btn-beatbooks btn-success">
+          + Escrever Primeiro Resumo
+        </a>
+      {% else %}
+        <a href="{% url 'cadastro' %}" class="btn-beatbooks btn-primary">
+          Criar Conta e Começar
+        </a>
+      {% endif %}
+    </div>
+  {% endif %}
+</section>
+{% endblock %}

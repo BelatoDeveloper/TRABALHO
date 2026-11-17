@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ acao }} • BeatBooks{% endblock %}
+
+{% block content %}
+<div class="form-center-container" style="max-width: 650px;">
+  <div class="card-beatbooks">
+    <div class="form-header">
+      <div class="hero-pill" style="margin-bottom: 0.75rem;">
+        📚 Registro Literário &bull; Estante BeatBooks
+      </div>
+      <h2 style="font-size: 1.8rem; font-weight: 900; margin-bottom: 0.4rem;">{{ acao }}</h2>
+      <p style="color: var(--text-muted); font-size: 0.95rem;">
+        {{ subtitulo }}
+      </p>
+    </div>
+
+    <form method="POST" novalidate>
+      {% csrf_token %}
+
+      {% if form.non_field_errors %}
+        <div class="alert-beatbooks alert-error" style="margin-bottom: 1.25rem;">
+          {{ form.non_field_errors }}
+        </div>
+      {% endif %}
+
+      <div class="form-group">
+        <label class="form-label" for="{{ form.titulo.id_for_label }}">{{ form.titulo.label }} *</label>
+        {{ form.titulo }}
+        {% if form.titulo.errors %}
+          <div class="form-field-errors">{{ form.titulo.errors }}</div>
+        {% endif %}
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="{{ form.autor.id_for_label }}">{{ form.autor.label }} *</label>
+        {{ form.autor }}
+        {% if form.autor.errors %}
+          <div class="form-field-errors">{{ form.autor.errors }}</div>
+        {% endif %}
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+        <div class="form-group">
+          <label class="form-label" for="{{ form.ano_publicacao.id_for_label }}">{{ form.ano_publicacao.label }}</label>
+          {{ form.ano_publicacao }}
+          {% if form.ano_publicacao.errors %}
+            <div class="form-field-errors">{{ form.ano_publicacao.errors }}</div>
+          {% endif %}
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="{{ form.total_paginas.id_for_label }}">{{ form.total_paginas.label }}</label>
+          {{ form.total_paginas }}
+          {% if form.total_paginas.errors %}
+            <div class="form-field-errors">{{ form.total_paginas.errors }}</div>
+          {% endif %}
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="{{ form.avaliacao.id_for_label }}">{{ form.avaliacao.label }}</label>
+        {{ form.avaliacao }}
+        {% if form.avaliacao.errors %}
+          <div class="form-field-errors">{{ form.avaliacao.errors }}</div>
+        {% endif %}
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="{{ form.resumo.id_for_label }}">
+          {{ form.resumo.label }} *
+        </label>
+        <div style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.4rem;">
+          💡 Este resumo será formatado na sua estante como uma folha de livro aberto com capitular estilizada.
+        </div>
+        {{ form.resumo }}
+        {% if form.resumo.errors %}
+          <div class="form-field-errors">{{ form.resumo.errors }}</div>
+        {% endif %}
+      </div>
+
+      <div style="display: flex; gap: 0.8rem; margin-top: 1.75rem;">
+        <a href="{% url 'perfil' %}" class="btn-beatbooks btn-secondary" style="flex: 1;">
+          Cancelar
+        </a>
+        <button type="submit" class="btn-beatbooks btn-success" style="flex: 1;">
+          Salvar na Estante
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

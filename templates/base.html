@@ -1,0 +1,81 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}BeatBooks • Prévia & Acesso Antecipado{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <script src="{% static 'js/theme.js' %}"></script>
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="navbar-container">
+      <a href="{% url 'home' %}" class="brand-logo">
+        <h2 class="brand-text">Beat<span>Books</span></h2>
+      </a>
+
+      <nav>
+        <ul class="nav-links">
+          <li><a href="{% url 'home' %}#projeto" class="nav-link">O Projeto</a></li>
+          <li><a href="{% url 'home' %}#previas" class="nav-link">Prévias do App</a></li>
+          <li><a href="{% url 'resumos_comunidade' %}" class="nav-link">Comunidade & Resumos</a></li>
+          {% if user.is_authenticated %}
+            <li><a href="{% url 'perfil' %}" class="nav-link">Meu Perfil</a></li>
+          {% endif %}
+        </ul>
+      </nav>
+
+      <div class="nav-actions">
+        <button id="theme-toggle-btn" class="btn-theme-toggle" type="button" aria-label="Alternar tema">
+          ☀️
+        </button>
+
+        {% if user.is_authenticated %}
+          <a href="{% url 'perfil' %}" class="btn-beatbooks btn-primary btn-sm">
+            Minha Estante
+          </a>
+          <a href="{% url 'logout' %}" class="btn-beatbooks btn-secondary btn-sm">
+            Sair
+          </a>
+        {% else %}
+          <a href="{% url 'login' %}" class="btn-beatbooks btn-secondary btn-sm">
+            Entrar
+          </a>
+          <a href="{% url 'cadastro' %}" class="btn-beatbooks btn-primary btn-sm">
+            Acesso Antecipado
+          </a>
+        {% endif %}
+      </div>
+    </div>
+  </header>
+
+  <main class="main-wrapper">
+    {% if messages %}
+      <div class="alert-container">
+        {% for message in messages %}
+          <div class="alert-beatbooks {% if message.tags == 'error' %}alert-error{% elif message.tags == 'success' %}alert-success{% else %}alert-info{% endif %}">
+            <span>{{ message }}</span>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    {% block content %}
+    {% endblock %}
+  </main>
+
+  <footer class="footer-beatbooks">
+    <div class="footer-container">
+      <div class="footer-credits">
+        <strong>BeatBooks</strong> • Plataforma de Leitura e Memórias Literárias
+      </div>
+      <div>
+        Versão de Prévia • Acesso Antecipado
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

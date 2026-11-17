@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{% block title %}Inscrição • Acesso Antecipado BeatBooks{% endblock %}
+
+{% block content %}
+<div class="form-center-container">
+  <div class="card-beatbooks">
+    <div class="form-header">
+      <div class="hero-pill" style="margin-bottom: 0.75rem;">
+        ✨ Vagas Abertas &bull; Acesso Antecipado
+      </div>
+      <h2 style="font-size: 1.8rem; font-weight: 900; margin-bottom: 0.4rem;">Crie sua Conta BeatBooks</h2>
+      <p style="color: var(--text-muted); font-size: 0.95rem;">
+        Cadastre-se para garantir seu lugar no Acesso Antecipado e comece a montar sua estante agora mesmo.
+      </p>
+    </div>
+
+    <form method="POST" novalidate>
+      {% csrf_token %}
+
+      {% if form.non_field_errors %}
+        <div class="alert-beatbooks alert-error" style="margin-bottom: 1.25rem;">
+          {{ form.non_field_errors }}
+        </div>
+      {% endif %}
+
+      <div class="form-group">
+        <label class="form-label" for="{{ form.nome_exibicao.id_for_label }}">{{ form.nome_exibicao.label }}</label>
+        {{ form.nome_exibicao }}
+        {% if form.nome_exibicao.errors %}
+          <div class="form-field-errors">{{ form.nome_exibicao.errors }}</div>
+        {% endif %}
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="{{ form.arroba.id_for_label }}">{{ form.arroba.label }}</label>
+        {{ form.arroba }}
+        {% if form.arroba.errors %}
+          <div class="form-field-errors">{{ form.arroba.errors }}</div>
+        {% endif %}
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="{{ form.username.id_for_label }}">{{ form.username.label }}</label>
+        {{ form.username }}
+        {% if form.username.errors %}
+          <div class="form-field-errors">{{ form.username.errors }}</div>
+        {% endif %}
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="{{ form.email.id_for_label }}">{{ form.email.label }}</label>
+        {{ form.email }}
+        {% if form.email.errors %}
+          <div class="form-field-errors">{{ form.email.errors }}</div>
+        {% endif %}
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="{{ form.senha.id_for_label }}">{{ form.senha.label }}</label>
+        {{ form.senha }}
+        {% if form.senha.errors %}
+          <div class="form-field-errors">{{ form.senha.errors }}</div>
+        {% endif %}
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="{{ form.confirmacao_senha.id_for_label }}">{{ form.confirmacao_senha.label }}</label>
+        {{ form.confirmacao_senha }}
+        {% if form.confirmacao_senha.errors %}
+          <div class="form-field-errors">{{ form.confirmacao_senha.errors }}</div>
+        {% endif %}
+      </div>
+
+      <button type="submit" class="btn-beatbooks btn-success" style="width: 100%; margin-top: 0.5rem;">
+        Garantir Meu Acesso Antecipado
+      </button>
+    </form>
+
+    <div class="form-footer-link">
+      Já tem uma conta cadastrada? <a href="{% url 'login' %}">Entrar</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

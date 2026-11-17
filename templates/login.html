@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block title %}Entrar • BeatBooks{% endblock %}
+
+{% block content %}
+<div class="form-center-container">
+  <div class="card-beatbooks">
+    <div class="form-header">
+      <div class="brand-icon" style="margin: 0 auto 1rem; width: 48px; height: 48px; font-size: 1.6rem;">
+        🔐
+      </div>
+      <h2 style="font-size: 1.8rem; font-weight: 900; margin-bottom: 0.4rem;">Entrar no BeatBooks</h2>
+      <p style="color: var(--text-muted); font-size: 0.95rem;">
+        Acesse sua estante pessoal, edite seus dados e continue registrando suas leituras.
+      </p>
+    </div>
+
+    <form method="POST" novalidate>
+      {% csrf_token %}
+
+      {% if form.non_field_errors %}
+        <div class="alert-beatbooks alert-error" style="margin-bottom: 1.25rem;">
+          {{ form.non_field_errors }}
+        </div>
+      {% endif %}
+
+      <div class="form-group">
+        <label class="form-label" for="id_username">Nome de Usuário</label>
+        <input type="text" name="username" autofocus required id="id_username" class="input-beatbooks" placeholder="Seu nome de usuário">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="id_password">Senha</label>
+        <input type="password" name="password" required id="id_password" class="input-beatbooks" placeholder="Sua senha secreta">
+      </div>
+
+      <button type="submit" class="btn-beatbooks btn-primary" style="width: 100%; margin-top: 0.5rem;">
+        Entrar na Minha Estante
+      </button>
+    </form>
+
+    <div class="form-footer-link">
+      Ainda não tem cadastro? <a href="{% url 'cadastro' %}">Inscrever-se para Acesso Antecipado</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

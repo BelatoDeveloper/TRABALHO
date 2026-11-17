@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+
+{% block title %}Meu Perfil & Estante • BeatBooks{% endblock %}
+
+{% block content %}
+<section class="card-beatbooks profile-header-card">
+  <div class="profile-identity">
+    <div class="avatar-circle" style="background-color: {{ perfil.cor_avatar }};">
+      {{ perfil.iniciais }}
+    </div>
+
+    <div>
+      <h1 class="profile-name">{{ perfil.nome_exibicao }}</h1>
+      <div class="profile-handle">{{ perfil.arroba }}</div>
+
+      {% if perfil.bio %}
+        <p class="profile-bio">{{ perfil.bio }}</p>
+      {% else %}
+        <p class="profile-bio" style="font-style: italic; opacity: 0.7;">
+          Nenhuma bio cadastrada ainda. Conte para a comunidade sobre suas preferências de leitura!
+        </p>
+      {% endif %}
+
+      {% if perfil.inscrito_acesso_antecipado %}
+        <div class="early-access-badge">
+          ★ Inscrito no Acesso Antecipado
+        </div>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="profile-stats-and-actions">
+    <div class="books-counter-box">
+      <div class="books-counter-number">{{ total_meus_livros }}</div>
+      <div class="books-counter-label">Livros Lidos</div>
+    </div>
+
+    <div style="display: flex; gap: 0.6rem; flex-wrap: wrap;">
+      <a href="{% url 'editar_perfil' %}" class="btn-beatbooks btn-secondary btn-sm">
+        ✏️ Personalizar Perfil
+      </a>
+      <a href="{% url 'adicionar_livro' %}" class="btn-beatbooks btn-success btn-sm">
+        + Adicionar Livro Lido
+      </a>
+    </div>
+  </div>
+</section>
+
+<section style="margin-top: 2rem;">
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
+    <div>
+      <h2 style="font-size: 1.6rem; font-weight: 900; letter-spacing: -0.5px;">Minha Estante de Leituras</h2>
+      <p style="color: var(--text-muted); font-size: 0.95rem;">
+        Seus livros concluídos e os resumos que você registrou para cada um deles.
+      </p>
+    </div>
+
+    <a href="{% url 'adicionar_livro' %}" class="btn-beatbooks btn-primary">
+      + Novo Livro Lido
+    </a>
+  </div>
+
+  {% if livros %}
+    <div class="bookshelf-grid">
+      {% for livro in livros %}
+        <article class="card-beatbooks book-card-item">
+          <div class="book-card-header">
+            <div>
+              <h3 class="book-title">{{ livro.titulo }}</h3>
+              <div class="book-author">por {{ livro.autor }}{% if livro.ano_publicacao %} ({{ livro.ano_publicacao }}){% endif %}</div>
+            </div>
+            {% if livro.avaliacao %}
+              <span class="rating-badge">{{ livro.get_avaliacao_display }}</span>
+            {% endif %}
+          </div>
+
+          <div class="reading-status-bar">
+            <span class="reading-status-indicator">Leitura Concluída</span>
+            <span>100%</span>
+          </div>
+
+          <div class="book-sheet">
+            <p class="book-sheet-text">{{ livro.resumo }}</p>
+            <div class="book-sheet-footer">
+              — {% if livro.total_paginas %}{{ livro.total_paginas }} págs • {% endif %}Resumo do Leitor —
+            </div>
+          </div>
+
+          <div class="book-actions-bar">
+            <a href="{% url 'editar_livro' livro.id %}" class="btn-beatbooks btn-secondary btn-sm" title="Editar informações do livro e resumo">
+              ✏️ Editar
+            </a>
+            <a href="{% url 'excluir_livro' livro.id %}" class="btn-beatbooks btn-danger btn-sm" title="Remover da estante">
+              🗑️ Excluir
+            </a>
+          </div>
+        </article>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="empty-state-box">
+      <div class="empty-state-icon">📖</div>
+      <h3 class="empty-state-title">Sua estante ainda está vazia</h3>
+      <p class="empty-state-text">
+        Adicione os livros que você já leu e guarde suas principais reflexões e aprendizados em resumos acolhedores.
+      </p>
+      <a href="{% url 'adicionar_livro' %}" class="btn-beatbooks btn-success">
+        + Adicionar Meu Primeiro Livro
+      </a>
+    </div>
+  {% endif %}
+</section>
+{% endblock %}

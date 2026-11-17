@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% block title %}Personalizar Perfil • BeatBooks{% endblock %}
+
+{% block content %}
+<div class="form-center-container" style="max-width: 580px;">
+  <div class="card-beatbooks">
+    <div class="form-header">
+      <div class="avatar-circle" style="margin: 0 auto 1.25rem; background-color: {{ perfil.cor_avatar }};">
+        {{ perfil.iniciais }}
+      </div>
+      <h2 style="font-size: 1.8rem; font-weight: 900; margin-bottom: 0.4rem;">Personalizar Perfil de Leitor</h2>
+      <p style="color: var(--text-muted); font-size: 0.95rem;">
+        Atualize seus dados públicos e selecione a cor tema que representa sua identidade na comunidade.
+      </p>
+    </div>
+
+    <form method="POST" novalidate>
+      {% csrf_token %}
+
+      {% if form.non_field_errors %}
+        <div class="alert-beatbooks alert-error" style="margin-bottom: 1.25rem;">
+          {{ form.non_field_errors }}
+        </div>
+      {% endif %}
+
+      <div class="form-group">
+        <label class="form-label" for="{{ form.nome_exibicao.id_for_label }}">{{ form.nome_exibicao.label }}</label>
+        {{ form.nome_exibicao }}
+        {% if form.nome_exibicao.errors %}
+          <div class="form-field-errors">{{ form.nome_exibicao.errors }}</div>
+        {% endif %}
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="{{ form.arroba.id_for_label }}">{{ form.arroba.label }}</label>
+        {{ form.arroba }}
+        {% if form.arroba.errors %}
+          <div class="form-field-errors">{{ form.arroba.errors }}</div>
+        {% endif %}
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="{{ form.cor_avatar.id_for_label }}">{{ form.cor_avatar.label }}</label>
+        {{ form.cor_avatar }}
+        {% if form.cor_avatar.errors %}
+          <div class="form-field-errors">{{ form.cor_avatar.errors }}</div>
+        {% endif %}
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="{{ form.bio.id_for_label }}">{{ form.bio.label }}</label>
+        {{ form.bio }}
+        {% if form.bio.errors %}
+          <div class="form-field-errors">{{ form.bio.errors }}</div>
+        {% endif %}
+      </div>
+
+      <div style="display: flex; gap: 0.8rem; margin-top: 1.75rem;">
+        <a href="{% url 'perfil' %}" class="btn-beatbooks btn-secondary" style="flex: 1;">
+          Cancelar
+        </a>
+        <button type="submit" class="btn-beatbooks btn-success" style="flex: 1;">
+          Salvar Alterações
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}
